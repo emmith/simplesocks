@@ -15,5 +15,9 @@ func main() {
 
 	client.Write([]byte("i am tcp client"))
 
+	msg := make([]byte, 1024)
+	client.Read(msg)
+	log.Println(string(msg))
+
 	client.Close()
 }

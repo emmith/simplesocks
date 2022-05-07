@@ -19,6 +19,8 @@ func recvMessage(client net.Conn) error {
 		}
 		if len > 0 {
 			log.Println(string(message[0:len]))
+			// 给客户端回复相同的信息
+			client.Write(message[0:len])
 		}
 	}
 
@@ -28,7 +30,7 @@ func recvMessage(client net.Conn) error {
 func main() {
 	server, err := net.Listen("tcp", "localhost:9700")
 	if err != nil {
-		log.Fatal("start UDP server failed!\n")
+		log.Fatal("start TCP server failed!\n")
 		os.Exit(1)
 	}
 	defer server.Close()

@@ -1,7 +1,6 @@
 package main
 
 import (
-	"io"
 	"log"
 	"net"
 	"os"
@@ -13,14 +12,17 @@ func recvMessage(client net.Conn) error {
 
 	// 因为发送方可能发送大于1024字节的数据，所以要采用循环读取
 	for {
-		len, err := client.Read(message)
-		if err == io.EOF {
+		msgLen, err := client.Read(message)
+		if err != nil {
 			break
 		}
-		if len > 0 {
-			log.Println(string(message[0:len]))
+		if msgLen > 0 {
+			log.Println(string(message[0:msgLen]))
 			// 给客户端回复相同的信息
-			client.Write(message[0:len])
+			_, err := client.Write(message[0:msgLen])
+			if err != nil {
+				break
+			}
 		}
 	}
 

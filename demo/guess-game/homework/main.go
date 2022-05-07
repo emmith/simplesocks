@@ -1,12 +1,8 @@
 package main
 
 import (
-	"bufio"
 	"fmt"
 	"math/rand"
-	"os"
-	"strconv"
-	"strings"
 	"time"
 )
 
@@ -22,20 +18,12 @@ func main() {
 
 	fmt.Printf("Please input your guess\n")
 
-	reader := bufio.NewReader(os.Stdin)
+	var guess int
 
 	for {
-		input, err := reader.ReadString('\n')
+		_, err := fmt.Scanf("%d", &guess)
 		if err != nil {
 			fmt.Printf("An error occured while read input, please try again %v\n", err)
-			continue
-		}
-
-		input = strings.TrimSuffix(input, "\n")
-		guess, err := strconv.Atoi(input)
-
-		if err != nil {
-			fmt.Printf("Invalid input %v, please input a integer", input)
 			continue
 		}
 
